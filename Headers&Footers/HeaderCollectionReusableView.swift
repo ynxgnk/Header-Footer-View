@@ -13,7 +13,7 @@ class HeaderCollectionReusableView: UICollectionReusableView {
     
     private let label: UILabel = { /* 27 */
         let label = UILabel() /* 28 */
-        label.text = "header" /* 29 */
+        label.text = "Header" /* 29 */
         label.textAlignment = .center /* 30 */
         label.textColor = .white /* 31 */
         return label /* 32 */
@@ -30,4 +30,25 @@ class HeaderCollectionReusableView: UICollectionReusableView {
     }
 }
 
-
+class FooterCollectionReusableView: UICollectionReusableView { /* 46 */
+    
+    static let identifier = "FooterCollectionReusableView" /* 47 */
+    
+    private let label: UILabel = { /* 48 */
+        let label = UILabel() /* 49 */
+        label.text = "Footer" /* 50 */
+        label.textAlignment = .center /* 51 */
+        label.textColor = .white /* 52 */
+        return label /* 53 */
+    }()
+    
+    public func configure() { /* 54 */
+        backgroundColor = .systemRed /* 55 */
+        addSubview(label) /* 56 */
+    }
+    
+    override func layoutSubviews() { /* 57 */
+        super.layoutSubviews() /* 58 */
+        label.frame = bounds /* 59 */
+    }
+}

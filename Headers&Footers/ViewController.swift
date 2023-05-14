@@ -15,7 +15,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewDidLoad()
         let layout = UICollectionViewFlowLayout() /* 2 */
         layout.scrollDirection = .vertical /* 3 */
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) /* 4 */
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5) /* 4 */
         layout.itemSize = CGSize(width: view.frame.size.width/2.2,
                                  height: view.frame.size.width/2.2) /* 5 */
         colletionView = UICollectionView(frame: .zero, collectionViewLayout: layout) /* 6 */
@@ -25,6 +25,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         colletionView?.register(HeaderCollectionReusableView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: HeaderCollectionReusableView.identifier) /* 39 */
+        
+        colletionView?.register(FooterCollectionReusableView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                withReuseIdentifier: FooterCollectionReusableView.identifier) /* 60 */
+        
         colletionView?.delegate = self /* 7 */
         colletionView?.dataSource = self /* 8 */
         colletionView?.backgroundColor = .white /* 9 */
@@ -36,6 +41,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         colletionView?.frame = view.bounds /* 13 */
     }
 
+    func numberOfSections(in collectionView: UICollectionView) -> Int { /* 67 */
+        3
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { /* 15 */
         4
@@ -49,6 +57,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView { /* 40 */
+        
+        //Footer
+        if kind == UICollectionView.elementKindSectionFooter { /* 61 */
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter,
+                                                                         withReuseIdentifier: FooterCollectionReusableView.identifier,
+                                                                         for: indexPath) as! FooterCollectionReusableView /* 62 */
+            footer.configure() /* 63 */
+            return footer /* 64 */
+        }
+        
+        //Header
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
                                                                      withReuseIdentifier: HeaderCollectionReusableView.identifier,
                                                                      for: indexPath) as! HeaderCollectionReusableView /* 41 */
@@ -60,6 +79,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize { /* 44 */
         return CGSize(width: view.frame.size.width,
                       height: 200) /* 45 */
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize { /* 65 */
+        return CGSize(width: view.frame.size.width,
+                      height: 200) /* 66 */
     }
 }
 
