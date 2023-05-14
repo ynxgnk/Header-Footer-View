@@ -21,6 +21,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         colletionView = UICollectionView(frame: .zero, collectionViewLayout: layout) /* 6 */
         colletionView?.register(MyCollectionViewCell.nib(),
                                 forCellWithReuseIdentifier: MyCollectionViewCell.identifier) /* 23 */
+        
+        colletionView?.register(HeaderCollectionReusableView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: HeaderCollectionReusableView.identifier) /* 39 */
         colletionView?.delegate = self /* 7 */
         colletionView?.dataSource = self /* 8 */
         colletionView?.backgroundColor = .white /* 9 */
@@ -41,6 +45,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCollectionViewCell.identifier,
                                                       for: indexPath) /* 24 */
         return cell /* 25 */
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView { /* 40 */
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
+                                                                     withReuseIdentifier: HeaderCollectionReusableView.identifier,
+                                                                     for: indexPath) as! HeaderCollectionReusableView /* 41 */
+        header.configure() /* 42 */
+        return header /* 43 */
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize { /* 44 */
+        return CGSize(width: view.frame.size.width,
+                      height: 200) /* 45 */
     }
 }
 
